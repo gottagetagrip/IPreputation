@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Reputation</title>
+    <link rel="icon" type="image/png" href="https://ipreputation.pages.dev/uskav.png">
+    <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        padding: 1vh 1vw;
+        background: linear-gradient(to bottom, #fed6af, #ffffee);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        background-color: rgba(0, 0, 0, 0);
+        height: 10vh;
+        padding: 1vh 1vw;
+        margin-bottom: 0.5vh;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1vw;
+    }
+    #page {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5vw;
+        flex: 1;
+        overflow: hidden;
+    }
+    #colLeft, main, #colRight {
+        background-color: #ffffff;
+        border: 1px solid #880000;
+        display: flex;
+        flex-direction: column;
+    }
+    .col-title {
+        background-color: #ffccaa;
+        color: #880000;
+        font-size: 0.85rem;
+        font-weight: bold;
+        padding: 0.4vh 1vw;
+        border-bottom: 1px solid #880000;
+        flex-shrink: 0;
+    }
+    #main-title{
+        background-color: #880000;
+        color: #ffffff;
+        font-size: 0.85rem;
+        font-weight: bold;
+        padding: 0.4vh 1vw;
+        border-bottom: 1px solid #880000;
+        flex-shrink: 0;
+    }
+    .col-title,#main-title{text-align: center;}
+    .col-content {
+        padding: 1vh 1vw;
+        flex: 1;
+        overflow-y: auto;
+    }
+    #colLeft {
+        width: 20%;
+        flex-shrink: 0;
+    }
+    main {
+        flex: 1;
+    }
+    #colRight {
+        width: 20%;
+        flex-shrink: 0;
+    }
+    #search-btn {
+        padding: 10px 20px;
+        background: #880000;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 0.95rem;
+        letter-spacing: 0.1em;
+        transition: background 0.2s, transform 0.1s;
+    }
+    #search-btn:hover { background: #aa0000; }
+    #search-btn:active { transform: scale(0.97); }
+    .popular-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 6px 8px;
+        border-bottom: 1px solid #ffccaa;
+        background: #fffaf5;
+        flex-shrink: 0;
+    }
+    .popular-controls select {
+        width: 100%;
+        padding: 4px 6px;
+        border: 1px solid #880000;
+        background: #fff;
+        color: #880000;
+        font-size: 0.78rem;
+        font-family: monospace;
+        cursor: pointer;
+        outline: none;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 1vh 2vw;
+            height: auto;
+        }
+        header {
+            height: auto;
+            min-height: 56px;
+            padding: 1vh 2vw;
+            gap: 2vw;
+            flex-wrap: wrap;
+        }
+        header img {
+            height: 40px !important;
+        }
+        header marquee {
+            font-size: 0.9rem !important;
+            min-width: 0;
+        }
+        header a {
+            font-size: 0.8rem !important;
+            padding: 0.25rem 0.6rem !important;
+            white-space: nowrap;
+        }
+        #page {
+            flex-direction: column;
+            overflow: visible;
+            gap: 8px;
+        }
+        #colLeft, #colRight {
+            width: 100%;
+        }
+        #colLeft .col-content,
+        #colRight .col-content {
+            max-height: 120px;
+        }
+        main {
+            width: 100%;
+        }
+        #search-btn {
+            font-size: 0.85rem;
+            padding: 10px 14px;
+            letter-spacing: 0.05em;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <header>
+    <img src="https://ipreputation.pages.dev/uskav.png" style="height: 100%;">
+    <marquee behavior="scroll" direction="right" style="flex: 1; font-size: 1.1rem; color: #880000; font-style: italic;">IP Reputation Checking Tool</marquee>
+    <a href="https://yusufkav.uk" target="_blank" style="
+        color: #880000;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid #880000;
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        transition: background 0.2s, color 0.2s;
+    "
+    onmouseover="this.style.background='#880000'; this.style.color='#fff';"
+    onmouseout="this.style.background='transparent'; this.style.color='#880000';">
+        yusufkav.uk ↗
+    </a>
+</header>
+    <div id="page">
+        <div id="colLeft">
+            <div class="col-title"><h1>Latest Searches</h1></div>
+            <div class="col-content"></div>
+        </div>
+        <main>
+            <div id="main-title"><h1>Check IP</h1></div>
+            <div class="col-content">
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <input type="text" id="ip-search" style="flex: 1; padding: 10px; border: 1px solid #880000; outline: none;">
+                    <button id="search-btn" style="padding: 10px 20px; background: #880000; color: white; border: none; cursor: pointer;">CHECK</button>
+                </div>
+            <div id="result-area" style="font-family: monospace;"></div>
+            </div>
+        </main>
+        <div id="colRight">
+            <div class="col-title"><h1>Mostly Searched</h1></div>
+            <div class="popular-controls">
+                <select id="popular-filter">
+                    <option value="all">all risks</option>
+                    <option value="high">high risk (&gt;50%)</option>
+                    <option value="medium">medium (11–50%)</option>
+                    <option value="low">low (0–10%)</option>
+                </select>
+                <select id="popular-sort">
+                    <option value="count">sort: most searched</option>
+                    <option value="score-desc">sort: score high→low</option>
+                    <option value="score-asc">sort: score low→high</option>
+                </select>
+            </div>
+            <div class="col-content"></div>
+        </div>
+    </div>
+    <script src="https://ipreputation.pages.dev/script.js"></script>
+</body>
+</html>
